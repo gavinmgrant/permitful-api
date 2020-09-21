@@ -5,6 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 const { CLIENT_ORIGIN } = require('./config');
+const favoritesRouter = require('./favorites/favorites-router');
 
 const app = express();
 
@@ -20,7 +21,9 @@ app.use(
     })
 );
 
-app.get('/api/*', (req, res) => {
+app.use('/api/favorites', favoritesRouter);
+
+app.get('/api/', (req, res) => {
     res.send('Hello, world!');
     res.json({ok: true});
 });
