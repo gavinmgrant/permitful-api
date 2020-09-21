@@ -67,12 +67,49 @@ describe('Favorites Endpoints', function() {
             })
 
             it('responds with 200 and the specified favorites', () => {
-                const permitId = 2;
-                const expectedFavorite = testFavorites[permitId - 1];
+                const permitNumber = 202011111111;
+                const expectedFavorite = testFavorites[0];
                 return supertest(app)
-                    .get(`/api/favorites/${permitId}`)
+                    .get(`/api/favorites/${permitNumber}`)
                     .expect(200, expectedFavorite)
             })
+        })
+    })
+
+    describe(`POST /api/favorites`, () => {
+        const testFavorites = makeFavoritesArray()
+
+        it(`creates a favorite permit, responding with 201 and the new favorite`, function() {
+            const newFavorite = {
+                permit_number: '202009184479'
+            }
+            return supertest(app)
+                .post('/api/favorites')
+                .send(newFavorite)
+                .expect(201)
+                .expect(res => {
+                    expect(res.body.permit_number).to.eq(newFavorite.permit_number)
+                    expect(res.body).to.have.property('id')
+                    expect(res.headers.location).to.eq(`/favorites/${res.body.permit_number}`)
+                })
+                .then(postRes =>
+                    supertest(app)
+                        .get(`/api/favorites/${postRes.body.permit_number}`)
+                        .expect(postRes.body)
+                )
+        })
+
+        it(`responds with 400 and an error message when the permit_number field is missing`, () => {
+            const newFavorite = {
+                permit_number: null
+            }
+
+            return supertest(app)
+                .post('/api/favorites')
+                .send(newFavorite)
+                .expect(400, {
+                    error: { message : `Missing 'permit_number' in request body`}
+                })
         })
     })
     
