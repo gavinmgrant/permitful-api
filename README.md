@@ -10,7 +10,7 @@ This is a project using a PostgreSQL database and Express server for the Permitf
 * If you want to seed your database, you can use this seed script: 
 
 ```
-psql -U YOUR_USERNAME -d permitful_favorites -f ./seeds/seed.permitful_favorites.sql
+psql -U YOUR_USERNAME -d permitful -f ./seeds/seed.permitful_favorites.sql
 ```
 
 * Copy the `example.env` file as `.env` and update `.env` with the following fields with your database credentials:
