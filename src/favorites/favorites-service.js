@@ -15,8 +15,8 @@ const FavoritesService = {
         return knex.from('permitful_favorites').select('*').where('permit_number', id).first()
     },
     deleteFavorite(knex, id) {
-        return knex('permitful_favorties')
-            .where({ id })
+        return knex('permitful_favorites')
+            .where('permit_number', id )
             .delete()
     },
 };

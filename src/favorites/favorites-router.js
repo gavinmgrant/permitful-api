@@ -63,4 +63,13 @@ favoritesRouter
             })
             .catch(next)
     })
+    .delete((req, res, next) => {
+        const knexInstance = req.app.get('db')
+        FavoritesService.deleteFavorite(knexInstance, req.params.permit_id)
+            .then(() => {
+                res.status(204).end()
+            })
+            .catch(next)
+    })
+
 module.exports = favoritesRouter;
