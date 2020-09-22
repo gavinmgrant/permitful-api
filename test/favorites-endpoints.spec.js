@@ -112,5 +112,40 @@ describe('Favorites Endpoints', function() {
                 })
         })
     })
+
+    describe(`DELETE /api/favorites/:permit_id`, () => {
+        context(`Given no favorites`, () => {
+            it(`responds with 404`, () => {
+                const permitId = 123456
+                return supertest(app)
+                    .delete(`/api/favorites/${permitId}`)
+                    .expect(404, { error: { message: `Favorite permit doesn't exist` } })
+            })
+        })
+
+        context('Given there are favorites in the database', () => {
+            const testFavorites = makeFavoritesArray()
+
+            beforeEach('insert favorites', () => {
+                return db
+                    .into('permitful_favorites')
+                    .insert(testFavorites)
+                })
+
+            it('responds with 204 and removes the favorite', () => {
+                const permitNumberToRemove = 202033333333;
+                const idToRemove = 3;
+                const expectedFavorites = testFavorites.filter(favorite => favorite.id !== idToRemove)
+                return supertest(app)
+                    .delete(`/api/favorites/${permitNumberToRemove}`)
+                    .expect(204)
+                    .then(res =>
+                        supertest(app)
+                            .get(`/api/favorites`)
+                            .expect(expectedFavorites)    
+                    )
+            })
+        })
+    })
     
 });
