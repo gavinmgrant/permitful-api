@@ -6,14 +6,14 @@ const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 const { CLIENT_ORIGIN } = require('./config');
 const favoritesRouter = require('./favorites/favorites-router');
+const authRouter = require('./auth/auth-router');
+const usersRouter = require('./users/users-router');
 
 const app = express();
 
-const morganOption = (NODE_ENV === 'production')
-    ? 'tiny'
-    : 'common';
-
-app.use(morgan(morganOption));
+app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
+    skip: () => NODE_ENV === 'test',
+}))
 app.use(helmet());
 app.use(
     cors({
@@ -22,6 +22,8 @@ app.use(
 );
 
 app.use('/api/favorites', favoritesRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter)
 
 app.get('/api/', (req, res) => {
     res.send('Hello, world!');
