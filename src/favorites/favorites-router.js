@@ -1,12 +1,13 @@
-const path = require('path');
 const express = require('express');
 const FavoritesService = require('./favorites-service');
+const { requireAuth } = require('../middleware/jwt-auth')
 
 const favoritesRouter = express.Router();
 const jsonParser = express.json();
 
 favoritesRouter
     .route('/')
+    .all(requireAuth)
     .get((req, res, next) => {
         const knexInstance = req.app.get('db');
         FavoritesService.getAllFavorites(knexInstance)
@@ -16,8 +17,8 @@ favoritesRouter
             .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
-        const { permit_number } = req.body;
-        const newFavorite = { permit_number }
+        const { permit_number, user_id } = req.body;
+        const newFavorite = { permit_number, user_id };
 
         for(const [key, value] of Object.entries(newFavorite)) {
             if (value == null) {
@@ -26,6 +27,9 @@ favoritesRouter
                 })
             }
         }
+
+        newFavorite.user_id = req.user.id;
+
         FavoritesService.insertFavorite(
             req.app.get('db'),
             newFavorite
@@ -33,17 +37,18 @@ favoritesRouter
             .then(favorite => {
                 res 
                     .status(201)
-                    .location(`/favorites/${favorite.permit_number}`)
+                    .location(`/favorites/${favorite.id}`)
                     .json(favorite)
             })
             .catch(next)
     })
 
 favoritesRouter
-    .route('/:permit_id')
+    .route('/:favorite_id')
+    .all(requireAuth)
     .all((req, res, next) => {
         const knexInstance = req.app.get('db');
-        FavoritesService.getById(knexInstance, req.params.permit_id)
+        FavoritesService.getById(knexInstance, req.params.favorite_id)
             .then(favorite => {
                 if (!favorite) {
                     return res.status(404).json({
@@ -57,7 +62,7 @@ favoritesRouter
     })
     .get((req, res, next) => {
         const knexInstance = req.app.get('db')
-        FavoritesService.getById(knexInstance, req.params.permit_id)
+        FavoritesService.getById(knexInstance, req.params.favorite_id)
             .then(favorite => {
                 res.json(favorite)
             })
@@ -65,7 +70,7 @@ favoritesRouter
     })
     .delete((req, res, next) => {
         const knexInstance = req.app.get('db')
-        FavoritesService.deleteFavorite(knexInstance, req.params.permit_id)
+        FavoritesService.deleteFavorite(knexInstance, req.params.favorite_id)
             .then(() => {
                 res.status(204).end()
             })
