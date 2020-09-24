@@ -37,18 +37,18 @@ favoritesRouter
             .then(favorite => {
                 res 
                     .status(201)
-                    .location(`/favorites/${favorite.id}`)
+                    .location(`/favorites/${favorite.permit_number}`)
                     .json(favorite)
             })
             .catch(next)
     })
 
 favoritesRouter
-    .route('/:favorite_id')
+    .route('/:permit_id')
     .all(requireAuth)
     .all((req, res, next) => {
         const knexInstance = req.app.get('db');
-        FavoritesService.getById(knexInstance, req.params.favorite_id)
+        FavoritesService.getById(knexInstance, req.params.permit_id)
             .then(favorite => {
                 if (!favorite) {
                     return res.status(404).json({
@@ -62,7 +62,7 @@ favoritesRouter
     })
     .get((req, res, next) => {
         const knexInstance = req.app.get('db')
-        FavoritesService.getById(knexInstance, req.params.favorite_id)
+        FavoritesService.getById(knexInstance, req.params.permit_id)
             .then(favorite => {
                 res.json(favorite)
             })
@@ -70,7 +70,7 @@ favoritesRouter
     })
     .delete((req, res, next) => {
         const knexInstance = req.app.get('db')
-        FavoritesService.deleteFavorite(knexInstance, req.params.favorite_id)
+        FavoritesService.deleteFavorite(knexInstance, req.params.permit_id)
             .then(() => {
                 res.status(204).end()
             })
