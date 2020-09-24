@@ -43,10 +43,7 @@ function makeExpectedFavorite(users, favorite) {
   return {
     id: favorite.id,
     permit_number: favorite.permit_number,
-    user: {
-      id: user.id,
-      user_name: user.user_name,
-    },
+    user_id: user.id,
   }
 };
 
