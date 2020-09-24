@@ -1,6 +1,8 @@
 const FavoritesService = {
     getAllFavorites(knex) {
-        return knex.select('*').from('permitful_favorites')
+        return knex
+            .select('*')
+            .from('permitful_favorites')
     },
     insertFavorite(knex, newFavorite) {
         return knex 
@@ -12,11 +14,15 @@ const FavoritesService = {
             })
     },
     getById(knex, id) {
-        return knex.from('permitful_favorites').select('*').where('permit_number', id).first()
+        return knex
+            .from('permitful_favorites')
+            .select('*')
+            .where({ id })
+            .first()
     },
     deleteFavorite(knex, id) {
         return knex('permitful_favorites')
-            .where('permit_number', id )
+            .where({ id })
             .delete()
     },
 };

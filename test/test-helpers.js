@@ -31,7 +31,7 @@ function makeFavoritesArray(users) {
     {
         id: 3,
         permit_number: '202000000002',
-        user_id: users[0].id,
+        user_id: users[1].id,
     },
   ]
 };

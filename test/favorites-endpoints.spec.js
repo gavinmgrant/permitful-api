@@ -3,7 +3,6 @@ const knex = require('knex');
 const app = require('../src/app');
 const helpers = require('./test-helpers');
 const supertest = require('supertest');
-const { makeUsersArray } = require('./test-helpers');
 
 describe('Favorites Endpoints', function() {
     let db;
@@ -28,10 +27,16 @@ describe('Favorites Endpoints', function() {
     afterEach('cleanup', () => helpers.cleanTables(db))
 
     describe(`GET /api/favorites`, () => {
+        
         context('Given no favorites', () => {
+            beforeEach(() =>
+                helpers.seedUsers(db, testUsers)
+            )
+
             it('responds with 200 and an empty list', () => {
                 return supertest(app)
                     .get('/api/favorites')
+                    .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
                     .expect(200, [])
             })
         })
@@ -54,12 +59,13 @@ describe('Favorites Endpoints', function() {
                   )
                   return supertest(app)
                     .get('/api/favorites')
+                    .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
                     .expect(200, expectedFavorites)
             })
         })
     })
 
-    describe(`GET /api/favorites/:permit_id`, () => {
+    describe(`GET /api/favorites/:favorite_id`, () => {
         context(`Given no favorites`, () => {
             beforeEach(() =>
                 helpers.seedUsers(db, testUsers)
@@ -84,13 +90,13 @@ describe('Favorites Endpoints', function() {
             )
 
             it('responds with 200 and the specified favorites', () => {
-                const permitNumber = 202000000000;
+                const favoriteId = 1;
                 const expectedFavorite = helpers.makeExpectedFavorite(
                     testUsers,
                     testFavorites[0],
                   )
                 return supertest(app)
-                    .get(`/api/favorites/${permitNumber}`)
+                    .get(`/api/favorites/${favoriteId}`)
                     .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
                     .expect(200, expectedFavorite)
             })
@@ -107,21 +113,25 @@ describe('Favorites Endpoints', function() {
             )
 
         it(`creates a favorite permit, responding with 201 and the new favorite`, function() {
+            const testUser = testUsers[0]
             const newFavorite = {
-                permit_number: '202009184479'
+                permit_number: '202009184479',
+                user_id: testUser.id
             }
             return supertest(app)
                 .post('/api/favorites')
+                .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
                 .send(newFavorite)
                 .expect(201)
                 .expect(res => {
-                    expect(res.body.permit_number).to.eq(newFavorite.permit_number)
                     expect(res.body).to.have.property('id')
-                    expect(res.headers.location).to.eq(`/favorites/${res.body.permit_number}`)
+                    expect(res.body.permit_number).to.eq(newFavorite.permit_number)
+                    expect(res.headers.location).to.eq(`/favorites/${res.body.id}`)
                 })
                 .then(postRes =>
                     supertest(app)
-                        .get(`/api/favorites/${postRes.body.permit_number}`)
+                        .get(`/api/favorites/${postRes.body.id}`)
+                        .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
                         .expect(postRes.body)
                 )
         })
@@ -133,6 +143,7 @@ describe('Favorites Endpoints', function() {
 
             return supertest(app)
                 .post('/api/favorites')
+                .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
                 .send(newFavorite)
                 .expect(400, {
                     error: { message : `Missing 'permit_number' in request body`}
@@ -140,13 +151,20 @@ describe('Favorites Endpoints', function() {
         })
     })
 
-    describe(`DELETE /api/favorites/:permit_id`, () => {
+    describe(`DELETE /api/favorites/:favorite_id`, () => {
         context(`Given no favorites`, () => {
+            beforeEach(() =>
+                helpers.seedUsers(db, testUsers)
+            )
+            
             it(`responds with 404`, () => {
-                const permitId = 123456
+                const idToRemove = 1
                 return supertest(app)
-                    .delete(`/api/favorites/${permitId}`)
-                    .expect(404, { error: { message: `Favorite permit doesn't exist` } })
+                    .delete(`/api/favorites/${idToRemove}`)
+                    .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
+                    .expect(404, { 
+                        error: { message: `Favorite permit doesn't exist` }
+                    })
             })
         })
 
@@ -160,15 +178,16 @@ describe('Favorites Endpoints', function() {
             )
 
             it('responds with 204 and removes the favorite', () => {
-                const permitNumberToRemove = 202000000002;
-                const idToRemove = 3;
+                const idToRemove = 2;
                 const expectedFavorites = testFavorites.filter(favorite => favorite.id !== idToRemove)
                 return supertest(app)
-                    .delete(`/api/favorites/${permitNumberToRemove}`)
+                    .delete(`/api/favorites/${idToRemove}`)
+                    .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
                     .expect(204)
                     .then(res =>
                         supertest(app)
                             .get(`/api/favorites`)
+                            .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
                             .expect(expectedFavorites)    
                     )
             })
