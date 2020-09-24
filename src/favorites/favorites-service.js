@@ -17,12 +17,12 @@ const FavoritesService = {
         return knex
             .from('permitful_favorites')
             .select('*')
-            .where({ id })
+            .where('permit_number', id)
             .first()
     },
     deleteFavorite(knex, id) {
         return knex('permitful_favorites')
-            .where({ id })
+            .where('permit_number', id)
             .delete()
     },
 };
