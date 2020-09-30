@@ -2,6 +2,10 @@
 
 This is a project using a PostgreSQL database and Express server for the Permitful building permit search app.
 
+## Permitful Client
+
+View the client side code in this [GitHub repo](https://github.com/gavinmgrant/permitful-client).
+
 ## Setup
 
 * Clone this repository to your local computer.
