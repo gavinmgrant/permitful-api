@@ -31,10 +31,6 @@ function requireAuth(err, req, res, next) {
     } catch(error) {
         res.status(401).json({ error: 'Unauthorized request' })
     }
-
-    if (401 == err.status) {
-        res.redirect('/api')
-    }
 };
 
 module.exports = {
