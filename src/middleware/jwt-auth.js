@@ -1,6 +1,6 @@
 const AuthService = require('../auth/auth-service');
 
-function requireAuth(req, res, next) {
+function requireAuth(err, req, res, next) {
     const authToken = req.get('Authorization') || '';
 
     let bearerToken
@@ -30,6 +30,10 @@ function requireAuth(req, res, next) {
             })
     } catch(error) {
         res.status(401).json({ error: 'Unauthorized request' })
+    }
+
+    if (401 == err.status) {
+        res.redirect('/api')
     }
 };
 
