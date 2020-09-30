@@ -10,7 +10,7 @@ favoritesRouter
     .all(requireAuth)
     .get((req, res, next) => {
         const knexInstance = req.app.get('db');
-        FavoritesService.getAllFavorites(knexInstance)
+        FavoritesService.getAllFavorites(knexInstance, req.user.id)
             .then(favorites => {
                 res.json(favorites)
             })
