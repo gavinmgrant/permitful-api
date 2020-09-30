@@ -1,7 +1,8 @@
 const FavoritesService = {
-    getAllFavorites(knex) {
+    getAllFavorites(knex, id) {
         return knex
             .select('*')
+            .where('user_id', id)
             .from('permitful_favorites')
     },
     insertFavorite(knex, newFavorite) {
