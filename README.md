@@ -20,6 +20,8 @@ View the client side code in this [GitHub repo](https://github.com/gavinmgrant/p
 * [Mocha](https://mochajs.org/) - Unit testing
 * [Chai](https://www.chaijs.com/) - Unit testing 
 * [Heroku](https://heroku.com) - Cloud platform for deployment
+* [Socrata](https://dev.socrata.com/foundry/data.sfgov.org/i98e-djp9) - San Francisco building permit API
+* [@react-google-maps/api](https://react-google-maps-api-docs.netlify.app/) - Bindings to the Google Maps API
 
 ## Setup
 
