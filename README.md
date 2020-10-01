@@ -6,6 +6,18 @@ This is a project using a PostgreSQL database and Express server for the Permitf
 
 View the client side code in this [GitHub repo](https://github.com/gavinmgrant/permitful-client).
 
+## Technology
+
+* Node.js
+* Express (Node.js framework) 
+* RESTful APIs 
+* PostgreSQL (database) 
+* Knex.js (SQL query builder)
+* Authentication via JWT 
+* Supertest (integration testing) 
+* Mocha and Chai (unit testing) 
+* Deployed via [Heroku](https://heroku.com)
+
 ## Setup
 
 * Clone this repository to your local computer.
