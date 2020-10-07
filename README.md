@@ -45,6 +45,9 @@ TEST_DATABASE_URL="postgresql://YOUR_USERNAME@localhost/YOUR_TEST_DATABASE_NAME"
 
 ## Schema
 
+### Entity Relationship Diagram
+![ERD for Permitful API](./permitful-ERD.png)
+
 ### Favorites Table `permitful_favorites`
 ```
 {
