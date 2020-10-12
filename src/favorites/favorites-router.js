@@ -70,7 +70,7 @@ favoritesRouter
     })
     .delete((req, res, next) => {
         const knexInstance = req.app.get('db')
-        FavoritesService.deleteFavorite(knexInstance, req.params.permit_id)
+        FavoritesService.deleteFavorite(knexInstance, req.params.permit_id, req.user.id)
             .then(() => {
                 res.status(204).end()
             })
