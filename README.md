@@ -16,19 +16,12 @@ View the client side code in this [GitHub repo](https://github.com/gavinmgrant/p
 * [PostgreSQL](https://www.postgresql.org/) - Relational Database 
 * [Knex.js](http://knexjs.org/) - SQL query builder
 * [JWT](https://jwt.io/) - Authentication 
-<<<<<<< HEAD
 * [Supertest](https://www.npmjs.com/package/supertest) - Testing HTTP calls 
 * [Mocha](https://mochajs.org/) - Testing framework
 * [Chai](https://www.chaijs.com/) - Assertion library
 * [Heroku](https://heroku.com) - Cloud platform for deployment
 * [Socrata](https://dev.socrata.com/foundry/data.sfgov.org/i98e-djp9) - San Francisco building permit API
 * [@react-google-maps/api](https://react-google-maps-api-docs.netlify.app/) - Bindings to the Google Maps API
-=======
-* [Supertest](https://www.npmjs.com/package/supertest) - Integration testing 
-* [Mocha](https://mochajs.org/) - Unit testing
-* [Chai](https://www.chaijs.com/) - Unit testing 
-* [Heroku](https://heroku.com) - Cloud platform for deployment
->>>>>>> fe0de338ca384a1cea2d9b2632307e2182209b79
 
 ## Setup
 
@@ -52,12 +45,9 @@ TEST_DATABASE_URL="postgresql://YOUR_USERNAME@localhost/YOUR_TEST_DATABASE_NAME"
 
 ## Schema
 
-<<<<<<< HEAD
 ### Entity Relationship Diagram
 ![ERD for Permitful API](./permitful-ERD.png)
 
-=======
->>>>>>> fe0de338ca384a1cea2d9b2632307e2182209b79
 ### Favorites Table `permitful_favorites`
 ```
 {
