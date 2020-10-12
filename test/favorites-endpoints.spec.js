@@ -51,13 +51,18 @@ describe('Favorites Endpoints', function() {
             )
 
             it('GET /favorites responds with 200 and all of the favorite permits', () => {
-                const expectedFavorites = testFavorites.map(favorite =>
+                const allFavorites = testFavorites.map(favorite =>
                     helpers.makeExpectedFavorite(
-                      testUsers,
-                      favorite,
+                        testUsers,
+                        favorite,
                     )
-                  )
-                  return supertest(app)
+                )
+
+                const expectedFavorites = allFavorites.filter(favorite => {
+                    return favorite.user_id == 1
+                }) 
+
+                return supertest(app)
                     .get('/api/favorites')
                     .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
                     .expect(200, expectedFavorites)
