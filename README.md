@@ -133,7 +133,7 @@ authorization: bearer ${token}
 // req.header
 authorization: bearer ${token}
 
-//res.body
+// res.body
 {
     id: Integer
     permit_number: String,
@@ -151,7 +151,7 @@ authorization: bearer ${token}
     permit_id: String
 }
 
-//res.body
+// res.body
 {
     id: Integer
     permit_number: String,
@@ -164,13 +164,13 @@ authorization: bearer ${token}
 // req.header
 authorization: bearer ${token}
 
-//req.body
+// req.body
 {
     permit_number: String, 
     user_id: Integer
 }
 
-//res.body
+// res.body
 {
     id: Integer
     permit_number: String,
