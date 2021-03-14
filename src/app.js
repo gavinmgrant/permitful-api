@@ -30,7 +30,7 @@ app.get('/api/', (req, res) => {
     res.json({ok: true});
 });
 
-app.use(function errorHandler(error, req, res) {
+app.use(function errorHandler(error, req, res, next) {
     let response
     if (NODE_ENV === 'production') {
         response = { error: { message: 'Server error. We\'re working on a solution, please come back later.' }}
