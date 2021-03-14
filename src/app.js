@@ -33,7 +33,7 @@ app.get('/api/', (req, res) => {
 app.use(function errorHandler(error, req, res, next) {
     let response
     if (NODE_ENV === 'production') {
-        response = { error: { message: 'server error' }}
+        response = { error: { message: 'Server error. We\'re working on a solution, please come back later.' }}
     } else {
         console.log(error)
         response = { message: error.message, error }
