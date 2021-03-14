@@ -20,25 +20,24 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "helmet": "^4.0.0",
+    "helmet": "^4.4.1",
     "jsonwebtoken": "^8.5.1",
-    "knex": "^0.21.5",
+    "knex": "^0.21.19",
     "morgan": "^1.10.0",
     "pg": "^7.18.2",
-    "postgrator-cli": "^3.2.0",
+    "postgrator-cli": "^3.3.0",
     "xss": "^1.0.8"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
-    "eslint": "^7.6.0",
-    "eslint-plugin-react": "^7.20.6",
-    "mocha": "^8.1.1",
-    "nodemon": "^2.0.4",
+    "chai": "^4.3.4",
+    "eslint": "^7.22.0",
+    "eslint-plugin-react": "^7.22.0",
+    "mocha": "^8.3.2",
+    "nodemon": "^2.0.7",
     "supertest": "^4.0.2"
   }
 }
