@@ -17,8 +17,8 @@ favoritesRouter
             .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
-        const { permit_number, user_id } = req.body;
-        const newFavorite = { permit_number, user_id };
+        const { permit_number, jurisdiction, user_id } = req.body;
+        const newFavorite = { permit_number, jurisdiction, user_id };
 
         for(const [key, value] of Object.entries(newFavorite)) {
             if (value == null) {

@@ -21,16 +21,19 @@ function makeFavoritesArray(users) {
     {
         id: 1,
         permit_number: '202000000000',
+        jurisdiction: 'SFO',
         user_id: users[0].id,
     },
     {
         id: 2,
         permit_number: '202000000001',
+        jurisdiction: 'SFO',
         user_id: users[0].id,
     },
     {
         id: 3,
         permit_number: '202000000002',
+        jurisdiction: 'SFO',
         user_id: users[1].id,
     },
   ]
@@ -43,6 +46,7 @@ function makeExpectedFavorite(users, favorite) {
   return {
     id: favorite.id,
     permit_number: favorite.permit_number,
+    jurisdiction: favorite.jurisdiction,
     user_id: user.id,
   }
 };
